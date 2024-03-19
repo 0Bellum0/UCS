@@ -41,7 +41,7 @@ void menu(int vet[N]){
         switch(opt){
             case 1:
                 if(total==N){
-                    printf("Limite de 9 cartas atingido!\n")
+                    printf("Limite de cartas atingido!\n")
                     break;
                 }
                 recebe_carta(vet);
