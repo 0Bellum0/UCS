@@ -29,7 +29,7 @@ void menu(int vet[N]){
 
     int total = 0;
 
-    while(total<N){
+    while(opt!=4){
         
         printf("\nDeseja realizar qual ação?\n");
         printf("1 - Receber cartas.\n");
@@ -41,6 +41,7 @@ void menu(int vet[N]){
         switch(opt){
             case 1:
                 recebe_carta(vet);
+                total++;
                 break;
             case 2:
                 listar_cartas(vet);
@@ -54,12 +55,7 @@ void menu(int vet[N]){
                 printf("Selecione uma opção válida!");
                 break;
         }
-        if(opt==4){
-            break;
-        }
-        total++;
     }
-    listar_cartas(vet);
 }
 
 void recebe_carta(int vet[N]){
