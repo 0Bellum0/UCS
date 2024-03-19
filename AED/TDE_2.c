@@ -43,10 +43,10 @@ void menu(int vet[N]){
                 recebe_carta(vet);
                 break;
             case 2:
-                listar_cartas();
+                listar_cartas(vet);
                 break;
             case 3:
-                listar_cartas_inv();
+                listar_cartas_inv(vet);
                 break;
             case 4:
                 break;
@@ -92,8 +92,16 @@ void listar_cartas(int vet[N]){
     }
 }
 
-void listar_cartas_inv(){
-
+void listar_cartas_inv(int vet[N]){
+    int i;
+    printf("Cartas: ")
+    for(i=0; i<N; i++){
+        if(i==N-1){
+            printf("%d", &vet[i]);
+        }
+        else{
+            printf("%d, ", &vet[i]);
+        }
 }
 
 void main(){
