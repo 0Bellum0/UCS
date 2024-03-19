@@ -1,0 +1,120 @@
+package filme;
+
+import java.util.Objects;
+import java.util.Set;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+
+import estabelecimento.Assento;
+import principal.Programa;
+import principal.Tela;
+
+public class Horario implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Date data;
+	//private Date hora;
+	private Set<Assento> assentos;
+	private Filme filme;
+
+	public Horario() {
+		this.assentos = new LinkedHashSet<>();
+	}
+
+	public Horario(Date data) {
+		this.data = data;
+		//this.hora = hora;
+		this.assentos = new LinkedHashSet<>();
+	}
+
+	public Horario(Date data, int qtdFileira, int qtdColuna) {
+		this.data = data;
+		//this.hora = hora;
+		this.assentos = new LinkedHashSet<>();
+		geraAssentos(assentos, qtdFileira, qtdColuna);
+	}
+
+	public void showAssentos() {
+		//for (int i=0; i<assentos.size(); i++) {
+		for(Assento assento : assentos) {
+			System.out.println(assento.getFileira() + " - " + assento.getNumero() + ": " + (assento.getOcupado() ? "X" : "L"));				
+		//}
+		}
+	}
+	
+	public void assentosIterator() {
+		Iterator <Assento> itAs = assentos.iterator();
+		while(itAs.hasNext()) {
+			Assento assentoAtual = itAs.next();
+			System.out.println(assentoAtual.getFileira() + " - " + assentoAtual.getNumero() + ": " + (assentoAtual.getOcupado() ? "X" : "L"));
+			System.out.println("Deseja selecionar este assento?");
+			System.out.println("1 - Sim, ocupar | 2 - Sim, desocupar | 0 - Não");
+			int ocup = Tela.sc.nextInt();
+			Tela.sc.nextLine();
+			if(ocup == 1) {
+				boolean bo = true;
+				assentoAtual.setOcupado(bo);
+			}
+			else if(ocup == 2) {
+				boolean bo = false;
+				assentoAtual.setOcupado(bo);
+			}
+		}
+	}
+
+	public void geraAssentos(Set<Assento> assentos, int qtdFileira, int qtdColuna) {
+		for (int i = 65; i < qtdFileira + 65; i++) {
+			for (int j = 0; j < qtdColuna; j++) {
+				Assento ass = new Assento((char) i, j + 1);
+				assentos.add(ass);
+			}
+		}
+		Programa.setDataChanged();
+	}
+
+	public Filme getFilme() {
+		return filme;
+	}
+
+	public void setFilme(Filme filme) {
+		this.filme = filme;
+		Programa.setDataChanged();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj) {
+			return true;
+		}
+		if(obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+		Horario horario = (Horario) obj;
+		return Objects.equals(data, horario.data);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(data);
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+		Programa.setDataChanged();
+	}
+/*
+	public Date getHora() {
+		return hora;
+	}
+
+	public void setHora(Date hora) {
+		this.hora = hora;
+		Programa.setDataChanged();
+	}*/
+}

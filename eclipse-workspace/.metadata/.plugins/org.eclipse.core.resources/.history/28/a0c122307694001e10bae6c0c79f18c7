@@ -1,0 +1,12 @@
+package filme;
+
+import java.util.Comparator;
+
+public class FilmeComparator implements Comparator <Filme> {
+
+	@Override
+	   public int compare(Filme f1, Filme f2) {
+	       return m1.getName().compareTo(m2.getName());
+	   }
+	
+}

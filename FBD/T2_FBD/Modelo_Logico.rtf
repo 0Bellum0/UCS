@@ -1,0 +1,46 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww27860\viewh16380\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\
+estado(\ul id,\ulnone  nome, uf);\
+\
+cidade(\ul id,\ulnone  #estado_id, nome);\
+\
+bairro(\ul id,\ulnone  #cidade_id, default, nome, created_id, updated_id, status);\
+\
+corretor(\ul id,\ulnone  #user_id, #cidade_id, updated_at, created_id, deleted_at);\
+\
+empreendimento(\ul id,\ulnone  #bairro_id, #cidade_id, #incorporadora_id, data_entrega, latitude, longitude, aluguel, updated_at, created_at, deleted_at);\
+\
+incorporadora(\ul id,\ulnone  #cidade_id, status, updated_at, created_at, deleted_at);\
+\
+users(\ul id,\ulnone  created_at);\
+\
+tipo_planta(\ul id,\ulnone  nome, tipo);\
+\
+empreedimento_acessos(#\ul empreendimento_id,\ulnone  #\ul users_id,\ulnone  \ul data,\ulnone  \ul sequencia,\ulnone  created_at, updated_at);\
+\
+empreendimento_andamento_obra(\ul id,\ulnone  \ul sequencial,\ulnone  #empreendimento_id, status, andamento, created_at, deleted_at, updated_at);\
+\
+empreendimento_planta(\ul id,\ulnone  \ul #empreendimento_id\ulnone , descricao, dormitorios, Suites, tipo, banheiros, area_privativa, area_total, \'e1rea_util, area_terreno, informacoes, valor, valor_aluguel, lavabos, elevadores, suites_master, vagas, updated_at, created_at, deleted_at);\
+\
+empreendimento_planta_posicao_solar(\ul id,\ulnone  #empreendimento_planta_id, posicao, updated_at, created_id);\
+\
+empreendimento_tabela_venda(\ul id,\ulnone  unidade, valor_reforco_anual, #empreendimento_id, grupo_id, sort, status, valor, valor_parcela, entrada, entrada_porcentagem, ato, parcelas, tipo, posicao_solar, reforco_anual, qtd_reforco_anual, area_total, area_privativa, area_box, area_uso_comum, box, tipologia, suite, dormitorios, garagem, fase, casa, inca, conceito, bloco, ato_porcentagem, area_ apartamento, na_entrega, andar, area_lote, saldo_financiado, reforco_semestral_qtd, reforco_semestral_r, v10_reforco, v20_reforco, v30_reforco, v40_reforco, desconto_promocional, desconto_promocional_r, valor_do_condominio_r, quadra, lote, localiza\'e7\'e3o, tipo_box, varanda, deposito, lancamento, lancamento_r, valor_m2, tabela_investidor, v6_anuais, mobiliado_e_decorado, condominio, pavimento, valor_avaliacao, financiamento, etapa, arras, desconto_promocional, vaga, frente_unidade, reforco_semestral, iptu_r, dezembro_2021_10, v12_meses_13, numero, area_do_garden, garden, matricula, valor_investidor, valor_locacao, v5_reforco, v6_reforco, valor_box, valor_total, chaves, v36x_mensais, entrada_de_50, vaga_extra, v20_na_assinatura_do_contrato, patio, desconto_para_pagamento_a_vista_7, condicao_de_pagamento_1, condicao_de_pagamento_2, banheiro, lavabo, sacada, precos_em_ate_36x_10_de_entrada, precos_em_ate_72x_v20_10_de_entrada, ato_em_3x, v24x_fixacub, v30_x_mensais, entrada_de_10_a_20, saldo_em_ate_42x_com_reforcos_semestrais, capital_int, area_privativa_box_m2, entrada_15_ato_ou_4x, parcelas_72x, corretor, desconto_a_vista_20, v20_de_entrada, a_vista_20_de_desconto, reforco_3x, desconto, v20_ato_ou_4x, v60x_parc_mensais, v05_ref_anuais_marco, area_total_apto_box, area_uso_comum_apto, area_uso_comum_box, avaliacao_caixa_para_simulacao, entrada_10, terraco, baloes_sugeridos, baloes_sugeridos_r, v30_de_entrada, v48_parcelas, desconto_promocional_10,desconto_promocional_12, v24x_mensais, saldofinanc, parcelas_mensais_37x, parcelas_anuais_3x, parcelas_anuais_4x, parcelas_mensais_55x, valor_promocional, saldo_em_60x, v20_entrada_em_3x, area_garagem_m2, box_duplo, box_duplo_m2, area_box_duplo, cohapar, sequencia, area_garden_m2, v30_entrada_ato3x, v40_parcelamento_ate_72x, v30_0v6_reforcos_anuais, v30_parcelas, descricao, floreira, reforco, reforco_r, instalacoes, v02_reforcos_dez22_e_jun23, v03_reforcos_dez22_jun23_dez23, parcelas_mensais_60x, avaliacao_cef, v40_entrada, valor_a_prazo_sem_dacao, a_vista_ou_financiamento_bancario, dacaotroca);\
+\
+empreendimento_tabela_venda_grupo(\ul id,\ulnone  #empreendimento_id, plug, name, created_at, updated_at);\
+\
+tabela_venda_campos(\ul id,\ulnone  slug, name, input_type, default, created_at, updated_at);\
+\
+incorporadora_has_cidade(#cidade_id\ul ,\ulnone  #incorporadora_id);\
+\
+user_enterprise_share(\ul id,\ulnone  #user_id, enterprise_id, receive_notification, status, created_at, updated_at, deleted_at);\
+\
+user_enterprise_share_access(\ul id,\ulnone  #user_enterprise_share_id, created_at, updated_at);\
+\
+user_has_cidades_atuacao(#user_id, #cidade_id);}

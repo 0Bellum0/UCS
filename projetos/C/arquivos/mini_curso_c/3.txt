@@ -1,0 +1,100 @@
+Suelen Gomes
+5.7 9.1 2.7
+Ana Ferreira
+8.7 9.1 6.6
+Fulano Alves
+4.3 6.1 0.0
+Maria Costa
+10.0 2.9 8.8
+José Oliveira
+7.4 3.6 9.3
+Fulano Alves
+2.4 4.7 4.0
+Ana Pereira
+6.6 3.2 9.8
+Paulo Silva
+5.2 8.1 6.0
+Ana Silva
+3.5 3.1 2.4
+Fulano Pereira
+6.7 6.7 3.5
+Fulano Ferreira
+9.0 4.4 2.9
+Sicrano Santos
+5.2 0.8 7.0
+Maria Alves
+7.4 3.9 8.1
+Beltrano Silva
+9.1 3.9 8.6
+Paulo Souza
+0.3 0.3 7.4
+João Pereira
+6.7 5.4 3.1
+Maria Alves
+2.6 4.1 9.8
+Ana Souza
+4.0 5.7 2.4
+Mariana Santos
+5.4 0.0 2.9
+Fulano Silva
+8.7 5.2 2.3
+João Santos
+2.5 6.5 9.5
+Maria Pereira
+3.0 3.8 0.6
+Sicrano Souza
+0.8 9.8 3.3
+Beltrano Oliveira
+7.0 9.7 9.6
+Pedro Alves
+4.0 1.4 0.5
+José Costa
+0.5 0.9 6.3
+José Pereira
+2.9 3.2 8.5
+João Silva
+1.2 4.4 4.2
+José Gomes
+9.1 3.3 4.1
+José Santos
+4.1 1.7 1.5
+João Rodrigues
+2.6 1.4 2.1
+Beltrano Gomes
+7.8 2.7 8.8
+Pedro Gomes
+9.8 6.6 4.0
+Maria Santos
+2.4 5.5 9.7
+Pedro Santos
+8.5 8.6 8.6
+Maria Rodrigues
+4.7 7.8 7.6
+Maria Pereira
+7.1 1.1 0.9
+Beltrano Souza
+7.7 8.3 1.6
+Maria Santos
+3.3 8.5 2.9
+Maria Ferreira
+1.9 4.1 1.7
+Mariana Oliveira
+6.7 1.7 4.3
+Ana Oliveira
+9.8 0.9 1.2
+Beltrano Alves
+2.0 1.7 5.0
+José Alves
+1.1 1.9 3.6
+Pedro Silva
+3.8 3.6 4.0
+Paulo Oliveira
+9.0 0.6 3.0
+Fulano Rodrigues
+1.9 3.5 2.1
+João Oliveira
+2.5 5.3 5.3
+João Alves
+9.5 7.8 0.8
+Fulano Souza
+9.1 8.1 3.8

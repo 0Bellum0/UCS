@@ -1,0 +1,26 @@
+25
+Belgica 6 4 2
+Brasil 1 7 8
+Franca 4 9 6
+Italia 4 1 0
+Australia 4 5 8
+Colombia 2 7 2
+Suica 7 3 3
+Tailandia 8 1 8
+Alemanha 1 1 8
+Argentina 9 1 8
+Canada 1 5 6
+China 0 1 3
+Dinamarca 6 0 0
+Espanha 2 9 4
+India 5 3 6
+Japao 1 6 5
+Mexico 4 3 4
+Noruega 1 0 1
+Portugal 6 3 3
+Russia 4 5 5
+Suecia 5 7 6
+Turquia 3 1 2
+Uruguai 3 1 0
+Estados Unidos 7 2 4
+Reino Unido 7 4 0

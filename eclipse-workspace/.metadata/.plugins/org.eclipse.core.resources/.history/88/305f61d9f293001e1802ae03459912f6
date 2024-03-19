@@ -1,0 +1,103 @@
+package filme;
+
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+
+import estabelecimento.Assento;
+import principal.Programa;
+
+public class Horario implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Date data;
+	//private Date hora;
+	private Set<Assento> assentos;
+	private Filme filme;
+
+	public Horario() {
+		this.assentos = new HashSet<>();
+	}
+
+	public Horario(Date data) {
+		this.data = data;
+		//this.hora = hora;
+		this.assentos = new HashSet<>();
+	}
+
+	public Horario(Date data, int qtdFileira, int qtdColuna) {
+		this.data = data;
+		//this.hora = hora;
+		this.assentos = new HashSet<>();
+		geraAssentos(assentos, qtdFileira, qtdColuna);
+	}
+
+	public void showAssentos() {
+		//for (int i=0; i<assentos.size(); i++) {
+		Set <Assento> treeAssento = new TreeSet(assentos);
+		for(Assento assento : treeAssento) {
+			System.out.println(assento.getFileira() + " - " + assento.getNumero() + ": " + (assento.getOcupado() ? "X" : "L"));				
+		//}
+		}
+	}
+
+	public void geraAssentos(Set<Assento> assentos, int qtdFileira, int qtdColuna) {
+		for (int i = 65; i < qtdFileira + 65; i++) {
+			for (int j = 0; j < qtdColuna; j++) {
+				Assento ass = new Assento((char) i, j + 1);
+				assentos.add(ass);
+			}
+		}
+		Programa.setDataChanged();
+	}
+
+	public Filme getFilme() {
+		return filme;
+	}
+
+	public void setFilme(Filme filme) {
+		this.filme = filme;
+		Programa.setDataChanged();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj) {
+			return true;
+		}
+		if(obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+		Horario horario = (Horario) obj;
+		return Objects.equals(data, horario.data);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(data);
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+		Programa.setDataChanged();
+	}
+/*
+	public Date getHora() {
+		return hora;
+	}
+
+	public void setHora(Date hora) {
+		this.hora = hora;
+		Programa.setDataChanged();
+	}*/
+}

@@ -1,0 +1,94 @@
+package filme;
+
+import java.io.Serializable;
+import java.util.Date;
+import estabelecimento.Assento;
+import principal.Programa;
+
+public class Ingresso implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private String comprador;
+	private Date data;
+	private Date hora;
+	private boolean meia;
+	private double celular;
+	private static float preco = 20;
+	private float precoFinal;
+	private Assento assento;
+	private Filme filme;
+
+	public Ingresso() {
+
+	}
+
+	public Ingresso(String comprador, Date data, Date hora, boolean meia, double celular, Filme filme,
+			Assento assento) {
+		this.comprador = comprador;
+		this.data = data;
+		this.hora = hora;
+		this.meia = meia;
+		this.celular = celular;
+		this.filme = filme;
+		this.assento = assento;
+		if (meia) {
+			this.precoFinal = preco / 2;
+		} else {
+			precoFinal = preco;
+		}
+	}
+
+	public String getComprador() {
+		return comprador;
+	}
+
+	public void setComprador(String comprador) {
+		this.comprador = comprador;
+		Programa.setDataChanged();
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+		Programa.setDataChanged();
+	}
+
+	public Date getHora() {
+		return hora;
+	}
+
+	public void setHora(Date hora) {
+		this.hora = hora;
+		Programa.setDataChanged();
+	}
+
+	public boolean isMeia() {
+		return meia;
+	}
+
+	public void setMeia(boolean meia) {
+		this.meia = meia;
+		Programa.setDataChanged();
+	}
+
+	public double getCelular() {
+		return celular;
+	}
+
+	public void setCelular(double celular) {
+		this.celular = celular;
+		Programa.setDataChanged();
+	}
+
+	public float getPreco() {
+		return preco;
+	}
+
+	public void setPreco(float preco) {
+		Ingresso.preco = preco;
+		Programa.setDataChanged();
+	}
+}

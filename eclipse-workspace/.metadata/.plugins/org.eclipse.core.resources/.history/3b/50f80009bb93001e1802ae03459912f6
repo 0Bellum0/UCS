@@ -1,0 +1,51 @@
+package filme;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import principal.Tela;
+
+abstract class Genero implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	private static List<String> generos = new ArrayList<String>();
+
+	static {
+		generos.add("Ação");
+		generos.add("Drama");
+		generos.add("Romance");
+		generos.add("Policial");
+		generos.add("Suspense");
+		generos.add("Guerra");
+		generos.add("Documentário");
+		generos.add("Terror");
+		generos.add("Ficção Científica");
+		generos.add("Triller");
+		generos.add("Geek");
+		generos.add("Anime");
+		generos.add("Infantil");
+	}
+	public static void listaGeneros() {
+		
+	}
+	
+	public Genero generosIterator() {
+		Iterator<String> itG = generos.iterator();
+		Genero generoAtual = null;
+		while (itG.hasNext()) {
+			Filme filmeAtual = itG.next();
+			System.out.println("Filme: " + filmeAtual.getNome());
+			System.out.println("Deseja selecionar este filme?");
+			System.out.println("Digite 1 - Sim | 0 - Não");
+			boolean bo = (Tela.sc.nextInt() == 1);
+			Tela.sc.nextLine();
+			if (bo) {
+				generoSelecionado = filmeAtual;
+				break;
+			}
+		}
+		return generoSelecionado;
+	}
+}

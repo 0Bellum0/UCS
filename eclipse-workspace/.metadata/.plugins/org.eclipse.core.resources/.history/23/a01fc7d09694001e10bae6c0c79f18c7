@@ -1,0 +1,832 @@
+package estabelecimento;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import principal.Programa;
+import principal.Tela;
+import filme.Filme;
+import filme.Genero;
+import filme.Horario;
+import filme.Ingresso;
+import pessoa.Ator;
+import pessoa.Diretor;
+import pessoa.Pessoa;
+
+public class Cinema implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private String nome;
+	private String endereco;
+	private Set<Sala> salas;
+	private Set<Filme> filmes;
+	private Set<Ator> atores;
+	private Set<Diretor>diretores;
+	private List<Ingresso> ingressos;
+	private static Sala salaSelecionada;
+	private static Filme filmeSelecionado;
+	private static Horario horarioSelecionado;
+	private static Assento assentoSelecionado;
+	private static Ator atorSelecionado;
+	private static Diretor diretorSelecionado;
+
+	public Cinema() {
+		this.salas = new HashSet<>();
+		this.filmes = new HashSet<>();
+		this.atores = new HashSet<>();
+		this.diretores = new HashSet<>();
+		this.ingressos = new ArrayList<>();
+	}
+
+	public Cinema(String nome, String endereco) {
+		this.nome = nome;
+		this.endereco = endereco;
+		this.salas = new HashSet<>();
+		this.filmes = new HashSet<>();
+		this.atores = new HashSet<>();
+		this.diretores = new HashSet<>();
+		this.ingressos = new ArrayList<>();
+	}
+
+	public void cadastro() {
+		try {
+
+			int option;
+
+			do {
+				System.out.println("-----------------------------------");
+				System.out.println("|            Cadastro             |");
+				System.out.println("|---------------------------------|");
+				System.out.println("|O que deseja cadastrar?          |");
+				System.out.println("| 1) Uma sala                     |");
+				System.out.println("| 2) Um horario para uma sala     |");
+				System.out.println("| 3) Um filme                     |");
+				System.out.println("| 4) Generos para um filme        |");
+				System.out.println("| 5) Atores                       |");
+				System.out.println("| 6) Diretores                    |");
+				System.out.println("| 7) Voltar para o menu anterior  |");
+				System.out.println("-----------------------------------");
+
+				option = Tela.sc.nextInt();
+				Tela.sc.nextLine();
+
+				switch (option) {
+
+				case 1:
+					System.out.println("Digite o número da sala: ");
+					int codNovaSala = Tela.sc.nextInt();
+					Tela.sc.nextLine();
+					Sala sala = new Sala(codNovaSala);
+					if (this.salas.contains(sala)) {
+						System.out.println("Sala ja existe, deseja remove-la?");
+						System.out.println("1 - Remover sala| 0 - Manter Sala/Sair");
+						if (Tela.sc.nextInt() == 1) {
+							Tela.sc.nextLine();
+							removeSala(sala);
+						}
+					}
+					else {
+						addSala(sala);
+					}
+					break;
+
+				case 2:
+					System.out.println("Selecione a sala: ");
+					salaSelecionada = salaIterator();
+					if (salaSelecionada == null) {
+						System.out.println("Selecione uma sala válida!");
+						break;
+					}
+					salaSelecionada.temHorario();
+					break;
+
+				case 3:
+					Filme filme = recebeFilme();
+					if (this.filmes.contains(filme)) {
+						System.out.println("Filme ja existe, deseja remove-lo?");
+						System.out.println("1 - Remover filme| 0 - Manter Filme/Sair");
+						if (Tela.sc.nextInt() == 1) {
+							Tela.sc.nextLine();
+							removeFilme(filme);
+							break;
+						}
+					}
+					else {
+						addFilme(filme);
+					}
+					
+					System.out.println("Deseja adicionar este filme a um horario de uma sala?");
+					System.out.println("1 - Sim | 0 - Não");
+					if(Tela.sc.nextInt() == 1) {
+						System.out.println("Selecione a sala: ");
+						salaSelecionada = salaIterator();
+						horarioSelecionado = salaSelecionada.selecionaHorario();
+						if (horarioSelecionado == null) {
+							System.out.println("Selecione um horário válido!");
+							break;
+						}
+						else {
+							horarioSelecionado.setFilme(filme);
+						}
+					}
+					break;
+					
+				case 4:
+					System.out.println("Selecione um filme: ");
+					filmeSelecionado = filmesIterator();
+					if(filmeSelecionado == null) {
+						System.out.println("Selecione um filme válido!");
+						break;
+					}
+					filmeSelecionado.temGenero();
+					break;
+
+				case 5:
+					Ator ator = cadAtor();
+					temAtor(ator);
+					
+					System.out.println("Deseja adiciona-lo a um filme?");
+					System.out.println("1 - Sim | 0 - Não");
+					if(Tela.sc.nextInt() == 1) {
+						System.out.println("Selecione um filme: ");
+						filmeSelecionado = filmesIterator();
+						if(filmeSelecionado == null) {
+							System.out.println("Selecione um filme válido!");
+							break;
+							}
+						ator.addFilme(filmeSelecionado);
+						filmeSelecionado.temAtor(ator);
+						}
+					break;
+
+				case 6:
+					Diretor diretor = cadDiretor();
+					temDiretor(diretor);
+					
+					System.out.println("Deseja adiciona-lo a um filme?");
+					System.out.println("1 - Sim | 0 - Não");
+					if(Tela.sc.nextInt() == 1) {
+						System.out.println("Selecione um filme: ");
+						filmeSelecionado = filmesIterator();
+						if(filmeSelecionado == null) {
+							System.out.println("Selecione um filme válido!");
+							break;
+							}
+						diretor.addFilme(filmeSelecionado);
+						filmeSelecionado.temDiretor(diretor);
+						}
+					break;
+
+				case 7:
+					System.out.println("Deseja realmente voltar?");
+					System.out.println("7 - Sim | 0 - Não");
+					option = Tela.sc.nextInt();
+					Tela.sc.nextLine();
+					break;
+
+				default:
+					System.out.println("Digite uma opção novamente!");
+					System.out.println("Digite enter para prosseguir!");
+					Tela.sc.nextLine();
+					break;
+				}
+
+			} while (option != 7);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void consulta() {
+		try {
+			
+			int option;
+			
+			do {
+				System.out.println("-----------------------------------");
+				System.out.println("|            Consulta             |");
+				System.out.println("|---------------------------------|");
+				System.out.println("| O que deseja consutar?          |");
+				System.out.println("| 1) Salas                        |");
+				System.out.println("| 2) Filmes                       |");
+				System.out.println("| 3) Generos                      |");
+				System.out.println("| 4) Atores                       |");
+				System.out.println("| 5) Diretores                    |");
+				System.out.println("| 6) Voltar para o menu anterior  |");
+				System.out.println("-----------------------------------");
+
+				option = Tela.sc.nextInt();
+				Tela.sc.nextLine();
+
+				switch (option) {
+				
+				case 1:
+					System.out.println("1 - listar salas com horarios | 0 - listar salas");
+					if(Tela.sc.nextInt() == 1) {
+						listSalasHorarios();
+					}
+					else {
+						listSalas();						
+					}
+					break;
+					
+				case 2:
+					listFilmes();
+					System.out.println("Deseja selecionar um filme?");
+					System.out.println("1 - Sim | 0 - Não");
+					if(Tela.sc.nextInt() == 1) {
+						if(filmes.isEmpty()) {
+							System.out.println("Não existem filmes cadastrados!");
+							break;
+						}
+						filmeSelecionado = filmesIterator();
+						System.out.println("O que deseja fazer?");
+						System.out.println("1 - Alterar dados | 2 - Remover | 0 - Voltar");
+						if(Tela.sc.nextInt() == 1) {
+							System.out.println("1 - Alterar Nome | 2 - Descrição | 3 - Ano | 4 - Duração | 5 - Diretor | 6 - Voltar");
+							int opt = Tela.sc.nextInt();
+							Tela.sc.nextLine();
+							
+							switch(opt) {
+							
+							case 1:
+								System.out.println("Digite o nome!");
+								String nome = Tela.sc.nextLine();
+								filmeSelecionado.setNome(nome);
+								break;
+								
+							case 2:
+								System.out.println("Digite a descrição!");
+								String descricao = Tela.sc.nextLine();
+								filmeSelecionado.setDescricao(descricao);
+								break;
+								
+							case 3:
+								System.out.println("Digite o ano!");
+								int ano = Tela.sc.nextInt();
+								filmeSelecionado.setAno(ano);
+								break;
+								
+							case 4:
+								System.out.println("Digite a duração!");
+								int duracao = Tela.sc.nextInt();
+								filmeSelecionado.setDuracao(duracao);
+								break;
+								
+							case 5:
+								
+								break;
+								
+							case 6:
+								System.out.println("Deseja realmente voltar?");
+								System.out.println("6 - Sim | 0 - Não");
+								option = Tela.sc.nextInt();
+								Tela.sc.nextLine();
+								break;
+								
+							default:
+								System.out.println("Digite uma opção novamente!");
+								System.out.println("Digite enter para prosseguir!");
+								Tela.sc.nextLine();
+								break;
+								
+							}
+						}
+						else if(Tela.sc.nextInt() == 2) {
+							removeFilme(filmeSelecionado);
+							System.out.println("Filme excluido com sucesso!");
+							break;
+						}
+					}
+					break;
+				
+				case 3:
+					Genero.listaGeneros();
+					break;
+					
+				case 4:
+					listAtores();
+					System.out.println("Deseja selecionar um ator?");
+					System.out.println("1 - Sim | 0 - Não");
+					if(Tela.sc.nextInt() == 1) {
+						if(atores.isEmpty()) {
+							System.out.println("Não existem atores cadastrados!");
+							break;
+						}
+						atorSelecionado = atoresIterator();
+						System.out.println("O que deseja fazer?");
+						System.out.println("1 - Alterar dados | 2 - Remover | 3 - Filmes | 0 - Voltar");
+						if(Tela.sc.nextInt() == 1) {
+							System.out.println("1 - Alterar Nome | 2 - Pais | 3 - Conjugue | 4 - Voltar");
+							int opt = Tela.sc.nextInt();
+							Tela.sc.nextLine();
+							
+							switch(opt) {
+							
+							case 1:
+								System.out.println("Digite o nome!");
+								String nome = Tela.sc.nextLine();
+								atorSelecionado.setNome(nome);
+								break;
+								
+							case 2:
+								System.out.println("Digite o pais de origem!");
+								String pais = Tela.sc.nextLine();
+								atorSelecionado.setPaisOrigem(pais);
+								break;
+								
+							case 3:
+								
+								break;
+								
+							case 4:
+								System.out.println("Deseja realmente voltar?");
+								System.out.println("4 - Sim | 0 - Não");
+								option = Tela.sc.nextInt();
+								Tela.sc.nextLine();
+								break;
+								
+							default:
+								System.out.println("Digite uma opção novamente!");
+								System.out.println("Digite enter para prosseguir!");
+								Tela.sc.nextLine();
+								break;
+								
+							}
+						}
+						else if(Tela.sc.nextInt() == 2) {
+							removeAtor(atorSelecionado);
+							System.out.println("Ator excluido com sucesso!");
+						}
+						else if(Tela.sc.nextInt() == 3) {
+							atorSelecionado.listFilmes();
+						}
+					}
+					break;
+					
+				case 5:
+					listDiretores();
+					System.out.println("Deseja selecionar um diretor?");
+					System.out.println("1 - Sim | 0 - Não");
+					if(Tela.sc.nextInt() == 1) {
+						if(diretores.isEmpty()) {
+							System.out.println("Não existem diretores cadastrados!");
+							break;
+						}
+						diretorSelecionado = diretoresIterator();
+						System.out.println("O que deseja fazer?");
+						System.out.println("1 - Alterar dados | 2 - Remover | 3 - Filmes | 0 - Voltar");
+						if(Tela.sc.nextInt() == 1) {
+							System.out.println("1 - Alterar Nome | 2 - Pais | 3 - Conjugue | 4 - Voltar");
+							int opt = Tela.sc.nextInt();
+							Tela.sc.nextLine();
+							
+							switch(opt) {
+							
+							case 1:
+								System.out.println("Digite o nome!");
+								String nome = Tela.sc.nextLine();
+								diretorSelecionado.setNome(nome);
+								break;
+								
+							case 2:
+								System.out.println("Digite o pais de origem!");
+								String pais = Tela.sc.nextLine();
+								diretorSelecionado.setPaisOrigem(pais);
+								break;
+								
+							case 3:
+								
+								break;
+								
+							case 4:
+								System.out.println("Deseja realmente voltar?");
+								System.out.println("4 - Sim | 0 - Não");
+								option = Tela.sc.nextInt();
+								Tela.sc.nextLine();
+								break;
+								
+							default:
+								System.out.println("Digite uma opção novamente!");
+								System.out.println("Digite enter para prosseguir!");
+								Tela.sc.nextLine();
+								break;
+								
+							}
+						}
+						else if(Tela.sc.nextInt() == 2) {
+							removeDiretor(diretorSelecionado);
+							System.out.println("Diretor excluido com sucesso!");
+						}
+						else if(Tela.sc.nextInt() == 3) {
+							diretorSelecionado.listFilmes();
+						}
+					}
+					break;
+					
+				case 6:
+					System.out.println("Deseja realmente voltar?");
+					System.out.println("6 - Sim | 0 - Não");
+					option = Tela.sc.nextInt();
+					Tela.sc.nextLine();
+					break;
+					
+				default:
+					System.out.println("Digite uma opção novamente!");
+					System.out.println("Digite enter para prosseguir!");
+					Tela.sc.nextLine();
+					break;
+				}
+				
+			}while(option != 6);
+			
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void venda() {
+		try {
+			
+			int option;
+			
+			do {
+				System.out.println("-----------------------------------");
+				System.out.println("|              Venda              |");
+				System.out.println("|---------------------------------|");
+				System.out.println("| Escolha uma das opções a seguir:|");
+				System.out.println("| 1) venda de ingressos           |");
+				System.out.println("| 2) Todos os ingressos vendidos  |");
+				System.out.println("| 3) Sair do sistema              |");
+				System.out.println("-----------------------------------");
+
+				option = Tela.sc.nextInt();
+				Tela.sc.nextLine();
+
+				switch (option) {
+
+				case 1:
+					listSalas();
+					Tela.sc.nextLine();
+					System.out.println("Selecione uma sala!");
+					salaSelecionada = salaIterator();
+					salaSelecionada.disponibilidade();
+					horarioSelecionado = salaSelecionada.horariosIterator();
+					
+					System.out.println("Digite a quantidade de assentos!");
+					int qtd = Tela.sc.nextInt();
+					Tela.sc.nextLine();
+					for(int i=0; i<qtd; i++) {
+						System.out.println("Digite o nome do comprador: ");
+						String comprador = Tela.sc.nextLine();
+						
+						boolean meia;
+						System.out.println("É meia?");
+						System.out.println("1 - Sim | 0 - Não");
+						if(Tela.sc.nextInt() == 1) {
+							meia = true;
+						}
+						else {
+							meia = false;
+						}
+						
+						System.out.println("Digite somente os números do celular do comprador: ");
+						double celular = Tela.sc.nextDouble();
+						Tela.sc.nextLine();
+						
+						horarioSelecionado.assentosIterator(assentoSelecionado);
+						
+						Ingresso ingresso = new Ingresso(comprador, salaSelecionada, horarioSelecionado.getData(), meia, celular, horarioSelecionado.getFilme(), assentoSelecionado);
+						
+						addIngresso(ingresso);
+					}
+					
+					break;
+					
+				case 2:
+					listIngressos();
+					Tela.sc.nextLine();
+					System.out.println("Digite enter para prosseguir!");
+					Tela.sc.nextLine();
+					break;
+
+				case 3:
+					System.out.println("Deseja realmente sair?");
+					System.out.println("3 - Sim | 0 - Não");
+					option = Tela.sc.nextInt();
+					Tela.sc.nextLine();
+					break;
+
+				default:
+					System.out.println("Digite uma opção novamente!");
+					System.out.println("Digite enter para prosseguir!");
+					Tela.sc.nextLine();
+					break;
+				}
+
+			} while (option != 3);
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public void addSala(Sala sala) {
+		this.salas.add(sala);
+		Programa.setDataChanged();
+	}
+
+	public void removeSala(Sala sala) {
+		this.salas.remove(sala);
+		Programa.setDataChanged();
+	}
+
+	public void addFilme(Filme filme) {
+		this.filmes.add(filme);
+		Programa.setDataChanged();
+	}
+
+	public void removeFilme(Filme filme) {
+		this.filmes.remove(filme);
+		Programa.setDataChanged();
+	}
+	
+	public void addAtor(Ator ator) {
+		this.atores.add(ator);
+		Programa.setDataChanged();
+	}
+
+	public void removeAtor(Ator ator) {
+		this.atores.remove(ator);
+		Programa.setDataChanged();
+	}
+
+	public void addDiretor(Diretor diretor) {
+		this.diretores.add(diretor);
+		Programa.setDataChanged();
+	}
+
+	public void removeDiretor(Diretor diretor) {
+		this.diretores.remove(diretor);
+		Programa.setDataChanged();
+	}
+	
+	public void addIngresso(Ingresso ingresso) {
+		this.ingressos.add(ingresso);
+		Programa.setDataChanged();
+	}
+	
+	public void removeIngresso(Ingresso ingresso) {
+		this.ingressos.remove(ingresso);
+		Programa.setDataChanged();
+	}
+
+	public void listSalas() {
+		for (Sala sala : salas) {
+			System.out.println("Sala: " + sala.getNumero());
+		}
+	}
+	
+	public void listAtores() {
+		System.out.println("Atores: ");
+		for(Ator ator : atores) {
+			System.out.println(ator.getNome());
+		}
+	}
+	
+	public void listDiretores() {
+		System.out.println("Diretores: ");
+		for(Diretor diretor : diretores) {
+			System.out.println(diretor.getNome());
+		}
+	}
+	
+	public void listFilmes() {
+		for(Filme filme : filmes) {
+			System.out.println("Filme: " + filme.getNome());
+		}
+	}
+	
+	public void listSalasHorarios() {
+		for (Sala sala : salas) {
+			System.out.println("Sala: " + sala.getNumero());
+			sala.listHorarios();
+		}
+	}
+	
+	public void listIngressos() {
+		for(Ingresso ingresso : ingressos) {
+			System.out.println(ingresso);
+		}
+	}
+
+	public Sala salaIterator() {
+		Iterator<Sala> itS = salas.iterator();
+		Sala salaSelecionada = null;
+		while (itS.hasNext()) {
+			Sala salaAtual = itS.next();
+			System.out.println("Sala: " + salaAtual.getNumero());
+			System.out.println("Deseja selecionar esta sala?");
+			System.out.println("Digite 1 - Sim | 0 - Não");
+			boolean bo = (Tela.sc.nextInt() == 1);
+			Tela.sc.nextLine();
+			if (bo) {
+				salaSelecionada = salaAtual;
+				break;
+			}
+		}
+		return salaSelecionada;
+	}
+
+	public Filme filmesIterator() {
+		Iterator<Filme> itF = filmes.iterator();
+		Filme filmeSelecionado = null;
+		while (itF.hasNext()) {
+			Filme filmeAtual = itF.next();
+			System.out.println("Filme: " + filmeAtual.getNome());
+			System.out.println("Deseja selecionar este filme?");
+			System.out.println("Digite 1 - Sim | 0 - Não");
+			boolean bo = (Tela.sc.nextInt() == 1);
+			Tela.sc.nextLine();
+			if (bo) {
+				filmeSelecionado = filmeAtual;
+				break;
+			}
+		}
+		return filmeSelecionado;
+	}
+	
+	public Ator atoresIterator() {
+		Iterator<Ator> itA = atores.iterator();
+		Ator atorSelecionado = null;
+		while (itA.hasNext()) {
+			Ator atorAtual = itA.next();
+			System.out.println("Ator: " + atorAtual.getNome());
+			System.out.println("Deseja selecionar este Ator?");
+			System.out.println("Digite 1 - Sim | 0 - Não");
+			boolean bo = (Tela.sc.nextInt() == 1);
+			Tela.sc.nextLine();
+			if (bo) {
+				atorSelecionado = atorAtual;
+				break;
+			}
+		}
+		return atorSelecionado;
+	}
+	
+	public Diretor diretoresIterator() {
+		Iterator<Diretor> itD = diretores.iterator();
+		Diretor diretorSelecionado = null;
+		while (itD.hasNext()) {
+			Diretor diretorAtual = itD.next();
+			System.out.println("Diretor: " + diretorAtual.getNome());
+			System.out.println("Deseja selecionar este diretor?");
+			System.out.println("Digite 1 - Sim | 0 - Não");
+			boolean bo = (Tela.sc.nextInt() == 1);
+			Tela.sc.nextLine();
+			if (bo) {
+				diretorSelecionado = diretorAtual;
+				break;
+			}
+		}
+		return diretorSelecionado;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+	
+	public Filme recebeFilme() {
+		System.out.println("Qual o nome do filme: ");
+		String nome = Tela.sc.nextLine();
+
+		System.out.println("Qual o ano do filme: ");
+		int ano = Tela.sc.nextInt();
+		Tela.sc.nextLine();
+
+		System.out.println("Qual a duração do filme: ");
+		int duracao = Tela.sc.nextInt();
+		Tela.sc.nextLine();
+
+		System.out.println("Qual a descrição do filme: ");
+		String descricao = Tela.sc.nextLine();
+
+		Filme filme = new Filme(nome, ano, duracao, descricao);
+		
+		return filme;
+	}
+	
+	public Ator cadAtor() {
+		System.out.println("Digite o nome do ator: ");
+		String nomeA = Tela.sc.nextLine();
+		
+		System.out.println("Digite o pais de origem do ator: ");
+		String paisOrA = Tela.sc.nextLine();
+		
+		System.out.println("O ator é casado?");
+		System.out.println("1 - Sim, com um(a) Ator/Atriz | 2 - Sim, com um(a) diretor(a) | 0 - Não");
+		
+		int selecao = Tela.sc.nextInt();
+		Tela.sc.nextLine();
+		Pessoa conjugue = null;
+			if(selecao == 1) {
+				System.out.println("Digite o nome do conjuge do ator: ");
+				String nomeC = Tela.sc.nextLine();
+				
+				System.out.println("Digite o pais de origem do conjuge do ator: ");
+				String paisOrC = Tela.sc.nextLine();
+				
+				conjugue = new Ator(nomeC, paisOrC);
+			}
+			else if(selecao == 2) {
+				System.out.println("Digite o nome do conjuge do ator: ");
+				String nomeC = Tela.sc.nextLine();
+				
+				System.out.println("Digite o pais de origem do conjuge do ator: ");
+				String paisOrC = Tela.sc.nextLine();
+				
+				conjugue = new Diretor(nomeC, paisOrC);
+			}
+		Ator ator = new Ator(nomeA, paisOrA, conjugue);
+		return ator;
+	}
+	
+	public Diretor cadDiretor() {
+		System.out.println("Digite o nome do diretor: ");
+		String nomeA = Tela.sc.nextLine();
+		
+		System.out.println("Digite o pais de origem do diretor: ");
+		String paisOrA = Tela.sc.nextLine();
+		
+		System.out.println("O ator é casado?");
+		System.out.println("1 - Sim, com um(a) Ator/Atriz | 2 - Sim, com um(a) diretor(a) | 0 - Não");
+		
+		int selecao = Tela.sc.nextInt();
+		Tela.sc.nextLine();
+		Pessoa conjugue = null;
+			if(selecao == 1) {
+				System.out.println("Digite o nome do conjuge do diretor: ");
+				String nomeC = Tela.sc.nextLine();
+				
+				System.out.println("Digite o pais de origem do conjuge do diretor: ");
+				String paisOrC = Tela.sc.nextLine();
+				
+				conjugue = new Ator(nomeC, paisOrC);
+			}
+			else if(selecao == 2) {
+				System.out.println("Digite o nome do conjuge do diretor: ");
+				String nomeC = Tela.sc.nextLine();
+				
+				System.out.println("Digite o pais de origem do conjuge do diretor: ");
+				String paisOrC = Tela.sc.nextLine();
+				
+				conjugue = new Diretor(nomeC, paisOrC);
+			}
+		Diretor diretor = new Diretor(nomeA, paisOrA, conjugue);
+		return diretor;
+	}
+	
+	public void temAtor(Ator ator) {
+		if(this.atores.contains(ator)) {
+			System.out.println("Ator ja cadastrado, deseja remove-lo?");
+			System.out.println("1 - Sim | 0 - Não");
+			if(Tela.sc.nextInt() == 1) {
+				removeAtor(ator);
+			}
+		}
+		else {
+			addAtor(ator);
+			
+		}
+	}
+	
+	public void temDiretor(Diretor diretor) {
+		if(this.diretores.contains(diretor)) {
+			System.out.println("diretor ja cadastrado, deseja remove-lo?");
+			System.out.println("1 - Sim | 0 - Não");
+			if(Tela.sc.nextInt() == 1) {
+				removeDiretor(diretor);
+			}
+		}
+		else {
+			addDiretor(diretor);
+		}
+	}
+}

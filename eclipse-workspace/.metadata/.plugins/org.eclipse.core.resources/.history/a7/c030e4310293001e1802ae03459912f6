@@ -1,0 +1,121 @@
+package estabelecimento;
+
+import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Set;
+
+import filme.Horario;
+import principal.Programa;
+import principal.Tela;
+
+public class Sala implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private int numero;
+	private Set<Horario> horarios;
+	private static Horario horarioSelecionado;
+
+	public Sala() {
+		this.horarios = new HashSet<>();
+	}
+
+	public Sala(int numero) {
+		this.numero = numero;
+		this.horarios = new HashSet<>();
+	}
+
+	public void addHorario(Horario horario) {
+		this.horarios.add(horario);
+		Programa.setDataChanged();
+	}
+	
+	public void removeHorario(Horario horario) {
+		this.horarios.remove(horario);
+		Programa.setDataChanged();
+	}
+	
+	public Horario horariosIterator() {
+		Iterator <Horario> itH = horarios.iterator();
+		Horario horarioSelecionado = null;
+		while(itH.hasNext()) {
+			Horario horarioAtual = itH.next();
+			System.out.println("Dia " + horarioAtual.getData() + " as " + horarioAtual.getHora().);
+			System.out.println("Deseja selecionar este horario?");
+			System.out.println("Digite 1 - Sim | 0 - Não");
+			boolean bo = (Tela.sc.nextInt() == 1);
+			Tela.sc.nextLine();
+			if(bo) {
+				horarioSelecionado = horarioAtual;
+				break;
+			}
+		}
+		return horarioSelecionado;
+	}
+	
+	public Horario selecionaHorario() {
+		System.out.println("Selecione um horario: ");
+		horarioSelecionado = horariosIterator();
+		if(horarioSelecionado == null) {
+			System.out.println("Selecione um horario!");
+		}
+		return horarioSelecionado;
+	}
+	
+	public void temHorario() throws ParseException {
+		System.out.println("Digite a data em dd-mm-yyyy HH:mm:ss: ");
+		String dataString = Tela.sc.nextLine();
+		SimpleDateFormat sdfD = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		sdfD.setLenient(false);
+		Date data = sdfD.parse(dataString);
+		
+		System.out.println("Digite a hora em HH:mm:ss: ");
+		String horaString = Tela.sc.nextLine();
+		SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm:ss");
+		sdfH.setLenient(false);
+		Date hora = sdfH.parse(horaString);
+		
+		System.out.println("Digite a quantidade de Fileiras: ");
+		int qtdF = Tela.sc.nextInt();
+		Tela.sc.nextLine();
+		
+		System.out.println("Digite a quantidade de Colunas: ");
+		int qtdC = Tela.sc.nextInt();
+		Tela.sc.nextLine();
+		
+		Horario horario = new Horario(data, hora, qtdF, qtdC);
+		if(this.horarios.contains(horario)) {
+			System.out.println("Horario ja existe, deseja remove-lo?");
+			System.out.println("1 - Remover horario| 0 - Manter horario/Sair");
+			if(Tela.sc.nextInt() == 1) {
+				Tela.sc.nextLine();
+				removeHorario(horario);
+			}
+		}
+		else {
+			addHorario(horario);
+		}
+	}
+
+	public int getNumero() {
+		return numero;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	  if (this == obj)
+	      return true;
+	  if (obj == null || getClass() != obj.getClass())
+	      return false;
+	  Sala sala = (Sala) obj;
+	  return numero == sala.numero;
+	}
+	
+	@Override
+	public int hashCode() {
+	  return Objects.hash(numero);
+	}
+}

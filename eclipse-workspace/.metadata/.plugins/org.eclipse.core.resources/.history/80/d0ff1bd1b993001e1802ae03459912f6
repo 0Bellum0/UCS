@@ -1,0 +1,30 @@
+package filme;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+abstract class Genero implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	private static List<String> nomes = new ArrayList<String>();
+
+	static {
+		nomes.add("Ação");
+		nomes.add("Drama");
+		nomes.add("Romance");
+		nomes.add("Policial");
+		nomes.add("Suspense");
+		nomes.add("Guerra");
+		nomes.add("Documentário");
+		nomes.add("Terror");
+		nomes.add("Ficção Científica");
+		nomes.add("Triller");
+		nomes.add("Geek");
+		nomes.add("Anime");
+		nomes.add("Infantil");
+	}
+	public static void listaGeneros() {
+		Genero[] generos = nomes.toArray(Genero[]generos);
+	}
+}

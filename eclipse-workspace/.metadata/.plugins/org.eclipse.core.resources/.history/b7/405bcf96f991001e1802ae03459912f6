@@ -1,0 +1,51 @@
+package pessoa;
+
+import java.util.List;
+import filme.Filme;
+
+abstract class Pessoa {
+
+	private String nome;
+	private String paisOrigem;
+	private Pessoa conjuge;
+	private List<Filme> filmes;
+
+	public Pessoa() {
+
+	}
+
+	public Pessoa(String nome, String paisOrigem) {
+		this.nome = nome;
+		this.paisOrigem = paisOrigem;
+	}
+
+	public Pessoa(String nome, String paisOrigem, Pessoa conjuge) {
+		this.nome = nome;
+		this.paisOrigem = paisOrigem;
+		this.conjuge = conjuge;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getPaisOrigem() {
+		return paisOrigem;
+	}
+
+	public void setPaisOrigem(String paisOrigem) {
+		this.paisOrigem = paisOrigem;
+	}
+
+	public Pessoa getConjuge() {
+		return conjuge;
+	}
+
+	public void setConjuge(Pessoa conjuge) {
+		this.conjuge = conjuge;
+	}
+}
