@@ -56,7 +56,7 @@ void menu(int vet[N]){
             case 4:
                 break;
             default:
-                printf("Selecione uma opção válida!");
+                printf("Selecione uma opção válida!\n");
                 break;
         }
     }
