@@ -25,7 +25,7 @@ Considere a implementação das cartas recebidas em um jogo como um vetor de 9 p
 
 void menu(int vet[N]){
 
-    int opt = 4;
+    int opt = 1;
 
     int total = 0;
 
@@ -36,7 +36,7 @@ void menu(int vet[N]){
         printf("2 - Listar cartas.\n");
         printf("3 - Inverter cartas.\n");
         printf("4 - Encerrar programa!\n");
-        scanf("%d", &opt);
+        //scanf("%d", &opt);
 
         switch(opt){
             case 1:
