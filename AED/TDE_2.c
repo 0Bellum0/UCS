@@ -65,6 +65,8 @@ void menu(int vet[N]){
 void recebe_carta(int vet[N]){
 
     int i, j, aux1, aux2;
+    
+    srand(time(NULL));
 
     int carta = rand() %13;
     printf("\nSua carta é: %d\n", carta);
@@ -111,8 +113,6 @@ void listar_cartas_inv(int vet[N]){
 void main(){
 
     int vet[N];
-
-    srand(time(NULL));
 
     menu(vet);
 }
