@@ -54,6 +54,9 @@ void menu(int vet[N]){
                 printf("Selecione uma opção válida!");
                 break;
         }
+        if(opt==4){
+            break;
+        }
         total++;
     }
 }
@@ -63,7 +66,7 @@ void recebe_carta(int vet[N]){
     int i, j, aux1, aux2;
 
     int carta = rand() %13;
-
+    printf("\nSua carta é: %d\n", carta);
     for(i=0; i<N; i++){
         if(carta < vet[i]){
             aux1 = vet[i];
