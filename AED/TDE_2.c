@@ -113,8 +113,6 @@ void listar_cartas_inv(int vet[N]){
 }
 
 void main(){
-
     int vet[N];
-
     menu(vet);
 }
