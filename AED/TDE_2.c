@@ -93,7 +93,7 @@ void main(){
 
     srand(time(NULL));
 
-
+    menu(vet);
 }
 
 /*
