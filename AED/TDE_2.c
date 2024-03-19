@@ -98,7 +98,7 @@ void listar_cartas(int vet[N]){
 void listar_cartas_inv(int vet[N]){
     int i;
     printf("Cartas: ")
-    for(i=0; i<N; i++){
+    for(i=8; i<N; i--){
         if(i==N-1){
             printf("%d", &vet[i]);
         }
