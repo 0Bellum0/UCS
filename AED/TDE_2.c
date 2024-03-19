@@ -69,7 +69,9 @@ void recebe_carta(int vet[N]){
     srand(time(NULL));
 
     int carta = rand() %13;
+    
     printf("\nSua carta é: %d\n", carta);
+    
     for(i=0; i<N; i++){
         if(carta < vet[i]){
             aux1 = vet[i];
