@@ -79,8 +79,17 @@ void recebe_carta(int vet[N]){
     }
 }
 
-void listar_cartas(){
-
+void listar_cartas(int vet[N]){
+    int i;
+    printf("Cartas: ")
+    for(i=0; i<N; i++){
+        if(i==8){
+            printf("%d", &vet[i]);
+        }
+        else{
+            printf("%d, ", &vet[i]);
+        }
+    }
 }
 
 void listar_cartas_inv(){
