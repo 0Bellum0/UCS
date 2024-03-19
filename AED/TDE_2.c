@@ -59,6 +59,7 @@ void menu(int vet[N]){
         }
         total++;
     }
+    listar_cartas(vet);
 }
 
 void recebe_carta(int vet[N]){
@@ -98,7 +99,7 @@ void listar_cartas(int vet[N]){
 void listar_cartas_inv(int vet[N]){
     int i;
     printf("\nCartas invertidas: ")
-    for(i=8; i<N; i--){
+    for(i=8; i>=0; i--){
         if(i==0){
             printf("%d", &vet[i]);
         }
