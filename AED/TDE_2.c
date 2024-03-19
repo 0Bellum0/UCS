@@ -83,7 +83,7 @@ void listar_cartas(int vet[N]){
     int i;
     printf("Cartas: ")
     for(i=0; i<N; i++){
-        if(i==8){
+        if(i==N-1){
             printf("%d", &vet[i]);
         }
         else{
