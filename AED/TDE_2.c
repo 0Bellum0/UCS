@@ -1,27 +1,79 @@
-/*
-TAD jogo{
-Dados: 
-    lista de cartas
-Operações:
-          recebe_carta(E: carta);
-          ver_lista_cartas(S: lista de cartas);
-          ver_lista_cartas_invertida(S: lista de cartas);
-}
-
-Tarefa:
-
-Considere a implementação das cartas recebidas em um jogo como um vetor de 9 posições. Fazer um menu de operações, para o usuário selecionar:
-
-- implementar a operação de recebe_carta(...), na qual é realizada a inserção de um valor de forma ordenada no vetor (não utilize um método de ordenação, cada inserção deve ser feita na sua posição considerando a ordem). Deve ser controlado o número de cartas inserido, para não ultrapassar 9 (se ultrapassar, mostrar mensagem de erro). A ordenação deve ser em ordem crescente de valores, ou seja, a cada inserção de uma nova carta, ela deve ser colocada na sua posição correta na lista. Pode haver valores repetidos na lista, cada baralho tem 4 cartas de mesmo valor (considere ou não separação por naipes). O valor das cartas deve estar entre 1 e 13.
-
-- implementar a operação ver_lista_cartas(...), que exiba a lista de cartas armazenada (exibir os valores das cartas em ordem crescente). --> tentar uma implementação recursiva
-- implementar a operação ver_lista_cartas_invertida(...), que exiba a lista de cartas (exibir os valores das cartas)  em ordem decrescente de valores.
-*/
-
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
 #define N 9
+
+void recebe_carta(int vet[N]){
+
+    int i, j, b=0, aux1, aux2;
+    
+    srand(time(NULL));
+
+    int carta = rand() %13;
+    while(carta == 0){
+        carta = rand() %13;
+    }
+    
+    printf("\nSua carta é: %d\n", carta);
+    
+    for(i=0; i<N; i++){
+        if(carta < vet[i] && (vet[i] >=1 || vet[i] <= 13)){
+            aux1 = vet[i];
+            vet[i] = carta;
+            for(j=i+1; j<N; j++){
+                if(aux1 < vet[j] && (vet[j] >=1 || vet[j] <= 13)){
+                    aux2 = vet[j];
+                    vet[j] = aux1;
+                    aux1 = aux2;
+                }
+                else if(aux1 == vet[j]){
+                    continue;
+                }
+                else if(vet[j] == 0){
+                    vet[j] = aux1;
+                    b = 1;
+                    break;
+                }
+            }
+        }
+        else if(carta == vet[i]){
+            continue;
+        }
+        else if(vet[i] == 0){
+            vet[i] = carta;
+            break;
+        }
+        if(b==1){
+            break;
+        }
+    }
+}
+
+void listar_cartas(int vet[N]){
+    int i;
+    printf("\nCartas: ");
+    for(i=0; i<N; i++){
+        if(i==N-1){
+            printf("%d\n", vet[i]);
+        }
+        else{
+            printf("%d, ", vet[i]);
+        }
+    }
+}
+
+void listar_cartas_inv(int vet[N]){
+    int i;
+    printf("\nCartas invertidas: ");
+    for(i=8; i>=0; i--){
+        if(i==0){
+            printf("%d\n", vet[i]);
+        }
+        else{
+            printf("%d, ", vet[i]);
+        }
+    }
+}
 
 void menu(int vet[N]){
 
@@ -41,7 +93,7 @@ void menu(int vet[N]){
         switch(opt){
             case 1:
                 if(total==N){
-                    printf("Limite de cartas atingido!\n")
+                    printf("Limite de cartas atingido!\n");
                     break;
                 }
                 recebe_carta(vet);
@@ -62,57 +114,11 @@ void menu(int vet[N]){
     }
 }
 
-void recebe_carta(int vet[N]){
-
-    int i, j, aux1, aux2;
-    
-    srand(time(NULL));
-
-    int carta = rand() %13;
-    
-    printf("\nSua carta é: %d\n", carta);
-    
-    for(i=0; i<N; i++){
-        if(carta < vet[i]){
-            aux1 = vet[i];
-            vet[i] = carta;
-            for(j=i+1; j<N; j++){
-                if(aux1 < vet[j]){
-                    aux2 = vet[j];
-                    vet[j] = aux1;
-                    aux1 = aux2;
-                }
-            }
-        }
-    }
-}
-
-void listar_cartas(int vet[N]){
-    int i;
-    printf("\nCartas: ")
-    for(i=0; i<N; i++){
-        if(i==N-1){
-            printf("%d", &vet[i]);
-        }
-        else{
-            printf("%d, ", &vet[i]);
-        }
-    }
-}
-
-void listar_cartas_inv(int vet[N]){
-    int i;
-    printf("\nCartas invertidas: ")
-    for(i=8; i>=0; i--){
-        if(i==0){
-            printf("%d", &vet[i]);
-        }
-        else{
-            printf("%d, ", &vet[i]);
-        }
-}
-
-void main(){
+int main(){
     int vet[N];
+    for(int i=0; i<N; i++){
+        vet[i] = 0;
+    }
     menu(vet);
+    return 1;
 }
