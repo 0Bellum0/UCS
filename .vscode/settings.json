@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "*.C": "c",
-        "*.c": "c",
-        "time.h": "c"
-    }
-}
