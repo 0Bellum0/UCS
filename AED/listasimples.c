@@ -11,7 +11,7 @@ struct nodo
 char resp;
 int valor;
 
-// Procedimento para insersao no inicio da lista
+// Procedimento para inserção no inicio da lista
 void insere(int dado, struct nodo **ini)
 {
    struct nodo *pnovo;
@@ -29,7 +29,7 @@ void insere(int dado, struct nodo **ini)
    }
 }
 
-// Procedimento para inser��o no fim da lista
+// Procedimento para inserção no fim da lista
 void insereFim(int dado, struct nodo **ini)
 {
    struct nodo *pnovo;

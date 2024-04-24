@@ -17,7 +17,7 @@ void recebe_carta(int vet[N]){
     printf("\nSua carta é: %d\n", carta);
     
     for(i=0; i<N; i++){
-    //implementar insersão no último espaço disponível no vetor e depois comparar com os anteriores. (A principio esta implementação usa somente um laço.)    
+    //implementar inserção no último espaço disponível no vetor e depois comparar com os anteriores. (A principio esta implementação usa somente um laço.)    
     }
 }
 
